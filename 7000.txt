@@ -1,0 +1,64 @@
+=================================== Accuracy ===================================
+                      name  accuracy
+9       Bagging Classifier  0.736571
+2                 LightGBM  0.735429
+3  Support Vector Machines     0.734
+0      Logistic Regression  0.732857
+1            Random Forest  0.730571
+4                  XGBoost  0.721714
+6    Bernoulli Naive Bayes      0.72
+5     Gaussian Naive Bayes  0.711429
+7                      KNN     0.674
+8            Decision Tree  0.625429
+
+================================== Precision ===================================
+                      name precision
+0      Logistic Regression  0.727174
+6    Bernoulli Naive Bayes  0.726908
+5     Gaussian Naive Bayes  0.725281
+9       Bagging Classifier  0.719153
+1            Random Forest  0.717895
+3  Support Vector Machines  0.716049
+2                 LightGBM  0.714576
+4                  XGBoost  0.712533
+7                      KNN  0.674612
+8            Decision Tree   0.63009
+
+============================== True Positive Rate ==============================
+                      name true_positive_rate
+2                 LightGBM           0.794466
+9       Bagging Classifier           0.786561
+3  Support Vector Machines           0.785997
+1            Random Forest           0.770186
+0      Logistic Regression           0.755505
+4                  XGBoost           0.754376
+6    Bernoulli Naive Bayes           0.715415
+5     Gaussian Naive Bayes             0.6917
+7                      KNN           0.687182
+8            Decision Tree           0.629023
+
+================================= Specificity ==================================
+                      name specificity
+2                 LightGBM    0.794466
+9       Bagging Classifier    0.786561
+3  Support Vector Machines    0.785997
+1            Random Forest    0.770186
+0      Logistic Regression    0.755505
+4                  XGBoost    0.754376
+6    Bernoulli Naive Bayes    0.715415
+5     Gaussian Naive Bayes      0.6917
+7                      KNN    0.687182
+8            Decision Tree    0.629023
+
+=================================== F1 Score ===================================
+                      name     score
+2                 LightGBM  0.752406
+9       Bagging Classifier  0.751348
+3  Support Vector Machines  0.749394
+1            Random Forest  0.743122
+0      Logistic Regression  0.741069
+4                  XGBoost  0.732858
+6    Bernoulli Naive Bayes  0.721116
+5     Gaussian Naive Bayes  0.708092
+7                      KNN  0.680839
+8            Decision Tree  0.629556
