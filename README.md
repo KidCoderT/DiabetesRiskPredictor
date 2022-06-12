@@ -11,7 +11,16 @@ So great Lets get to it. Ive already submitted the form for joining and so now a
 
 Also all the notes plans and more on the model im building and web app im making is in the main.py file
 
-**DATA LOG**
+TODOS:
+ - Make Model 2
+ - Host model 2 on api
+ - Create Next/React app for diabetes Predictor
+ - Create Small documentation for api usage
+
+**CATALOG**
 
 - 09-06-2022
   - Submitted Form
+- 12-06-2022
+  - Created Api For Model  & tests
+  - Hosted them on heroku [link](https://kct-diabetes-api.herokuapp.com/)
