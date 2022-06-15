@@ -62,9 +62,9 @@ function App() {
         variants={leftSide}
         initial="hidden"
         animate="visible"
-        className="text-center mid:w-3/5 w-full h-screen p-5 flex flex-col justify-center items-center px-16"
+        className="text-center mid:w-3/5 w-full min-h-fit mid:h-screen p-5 flex flex-col justify-center items-center mid:items-start px-16"
       >
-        <h1 className="text-6xl font-pacifico font-thin">
+        <h1 className="text-3xl sm:text-4xl mid:text-6xl font-pacifico font-thin">
           Diabetes Risk Predictor!
         </h1>
         <p className="font-fredoka text-2xl mt-5 max-w-[500px]">
@@ -167,9 +167,13 @@ function App() {
         variants={rightSide}
         initial="hidden"
         animate="visible"
-        className="mid:w-2/5 w-full h-screen min-h-fit flex flex-col justify-center items-center py-10 bg-theme_blue mid:bg-transparent"
+        className="mid:w-2/5 w-full h-screen min-h-fit flex flex-col justify-center items-center py-10 bg-theme_blue mid:bg-transparent relative overflow-hidden mid:overflow-visible"
       >
-        <img src={cat} alt={"Me"} className="w-72 rounded-full m-5 lg:w-96" />
+        <img
+          src={cat}
+          alt={"Me"}
+          className="w-72 sm:w-80 rounded-full m-5 lg:w-96"
+        />
         <h1 className="font-fredoka text-white text-3xl lg:text-4xl">
           @kidcodert
         </h1>
