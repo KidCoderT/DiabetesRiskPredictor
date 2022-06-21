@@ -1,6 +1,6 @@
 import React from "react";
 
-const Link = ({ text, href, color }) => {
+const CustomLink = ({ text, href, color }) => {
   return (
     <a
       href={href}
@@ -13,4 +13,4 @@ const Link = ({ text, href, color }) => {
   );
 };
 
-export default Link;
+export default CustomLink;

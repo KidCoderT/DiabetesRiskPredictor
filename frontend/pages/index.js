@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
-import Link from "../components/Link";
+import CustomLink from "../components/CustomLink";
+import Link from "next/link";
 
 function Home() {
   const leftSection = {
@@ -113,47 +114,46 @@ function Home() {
           always consult a doctor when you get a bad reading.
         </motion.p>
 
-        <a
-          href="#_"
-          class="relative min-h-[40px] inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-theme_blue transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group"
-        >
-          <span class="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-theme_blue group-hover:h-full border-black group-hover:border-2"></span>
-          <span class="absolute right-0 pr-4 duration-100 ease-out group-hover:translate-x-12">
-            <svg
-              class="w-5 h-5 text-theme_blue"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M14 5l7 7m0 0l-7 7m7-7H3"
-              ></path>
-            </svg>
-          </span>
-          <span class="absolute left-0 pl-2.5 -translate-x-12 group-hover:translate-x-0 ease-out duration-200">
-            <svg
-              class="w-5 h-5 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M14 5l7 7m0 0l-7 7m7-7H3"
-              ></path>
-            </svg>
-          </span>
-          <span class="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white font-fredoka font-thin">
-            Start Questioner
-          </span>
-        </a>
+        <Link href="/questionnaire">
+          <a class="relative min-h-[40px] inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-theme_blue transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group">
+            <span class="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-theme_blue group-hover:h-full border-black group-hover:border-2"></span>
+            <span class="absolute right-0 pr-4 duration-100 ease-out group-hover:translate-x-12">
+              <svg
+                class="w-5 h-5 text-theme_blue"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                ></path>
+              </svg>
+            </span>
+            <span class="absolute left-0 pl-2.5 -translate-x-12 group-hover:translate-x-0 ease-out duration-200">
+              <svg
+                class="w-5 h-5 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                ></path>
+              </svg>
+            </span>
+            <span class="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white font-fredoka font-thin">
+              Start Questioner
+            </span>
+          </a>
+        </Link>
         <div class="w-[90%] h-[3px] bg-black my-4 rounded-full" />
 
         <motion.div
@@ -162,22 +162,22 @@ function Home() {
           animate="visible"
           className="ml-3 flex flex-wrap justify-center items-center"
         >
-          <Link
+          <CustomLink
             text="Github"
             href="https://github.com/KidCoderT"
             color="bg-gray-900"
           />
-          <Link
+          <CustomLink
             text="Kaggle"
             href="https://www.kaggle.com/kidcodert"
             color="bg-cyan-600"
           />
-          <Link
+          <CustomLink
             text="Linkedin"
             href="https://www.linkedin.com/in/tejas-sunil-bb18611b4/"
             color="bg-blue-800"
           />
-          <Link
+          <CustomLink
             text="Source Code"
             href="https://github.com/KidCoderT/DiabetesRiskPredictor"
             color="bg-theme_blue"

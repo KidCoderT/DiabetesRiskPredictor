@@ -18,7 +18,14 @@ module.exports = {
       screens: {
         mid: "1050px",
       },
+      height: {
+        half_screen: "50%",
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/forms")({
+      strategy: "class",
+    }),
+  ],
 };

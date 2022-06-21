@@ -6,47 +6,49 @@ import joblib
 app = FastAPI()
 
 # model 1
-model_1 = joblib.load('./models/model_1.sav')
+model_1 = joblib.load("./models/model_1.sav")
 
 
 # Home Page
-@app.get('/')
+@app.get("/")
 def hello():
     return "Hello World"
 
 
 # Test For Diabetes
-@app.post('/m1')
+@app.post("/m1")
 def model_1_predict(inputs: schemas.ModelTestDiabetes):
-    test_data = [[
-        inputs.HighBP * 1,
-        inputs.HighChol * 1,
-        inputs.CholCheck * 1,
-        inputs.BMI,
-        inputs.Smoker * 1,
-        inputs.Stroke * 1,
-        inputs.HeartDiseaseOrAttack * 1,
-        inputs.PhysActivity * 1,
-        inputs.Fruits * 1,
-        inputs.Veggies * 1,
-        inputs.HvyAlcoholConsump * 1,
-        inputs.AnyHealthcare * 1,
-        inputs.NoDocbcCost * 1,
-        inputs.GenHlth,
-        inputs.MentHlth,
-        inputs.PhysHlth,
-        inputs.DiffWalk * 1,
-        inputs.Sex * 1,
-        inputs.Age,
-        inputs.Education,
-        inputs.Income
-    ]]
+    test_data = [
+        [
+            inputs.HighBP * 1,
+            inputs.HighChol * 1,
+            inputs.CholCheck * 1,
+            inputs.BMI,
+            inputs.Smoker * 1,
+            inputs.Stroke * 1,
+            inputs.HeartDiseaseOrAttack * 1,
+            inputs.PhysActivity * 1,
+            inputs.Fruits * 1,
+            inputs.Veggies * 1,
+            inputs.HvyAlcoholConsump * 1,
+            inputs.AnyHealthcare * 1,
+            inputs.NoDocbcCost * 1,
+            inputs.GenHlth,
+            inputs.MentHlth,
+            inputs.PhysHlth,
+            inputs.DiffWalk * 1,
+            inputs.Sex * 1,
+            inputs.Age,
+            inputs.Education,
+            inputs.Income,
+        ]
+    ]
 
     return {"result": model_1.predict(test_data)[0]}
 
 
 # Test For Possibility of prediabetes
-@app.post('/pre')
+@app.post("/pre")
 def prediabetes_risk(inputs: schemas.RiskInputs):
     if inputs.total_score <= 4:
         return {"risk": "low"}
@@ -59,7 +61,7 @@ def prediabetes_risk(inputs: schemas.RiskInputs):
 # Test For Type 1 or 2
 
 # Test For possibility of type 2
-@app.post('/type_2')
+@app.post("/type_2")
 def type2_risk(inputs: schemas.RiskInputs):
     risk = ""
     notes = ""
