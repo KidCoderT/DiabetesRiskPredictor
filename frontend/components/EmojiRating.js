@@ -125,7 +125,7 @@ const EmojiRating = ({ rating, setRating }) => {
           <button
             type="button"
             key={data.index}
-            className="bg-transparent hover:-translate-y-3 transition-all duration-100 ease-in-out border-none outline-none cursor-pointer px-2"
+            className="bg-transparent hover:-translate-y-3 transition-all duration-100 ease-in-out border-none outline-none cursor-pointer px-1 lg:px-2"
             onClick={() => setRating(data.index)}
             onMouseEnter={() => setHover(data.index)}
             onMouseLeave={() => setHover(undefined)}

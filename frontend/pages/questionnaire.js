@@ -237,7 +237,10 @@ const questionnaire = () => {
         <Field
           index="14"
           question={
-            <>Do you have a serios difficulty climbing or walking up stairs?</>
+            <>
+              Do you have a serious difficulty <br></br> climbing or walking up
+              stairs?
+            </>
           }
           htmlFor="diffWalk"
         >
@@ -247,7 +250,7 @@ const questionnaire = () => {
         {/* 15.Sex */}
         <Field
           index="15"
-          question={<>What is you Sex? (Male or Female?)</>}
+          question={<>What is your Sex? (Male or Female?)</>}
           htmlFor="sex"
         >
           <ToggleSwitch
