@@ -168,9 +168,9 @@ function Home() {
             color="bg-gray-900"
           />
           <CustomLink
-            text="Kaggle"
-            href="https://www.kaggle.com/kidcodert"
-            color="bg-cyan-600"
+            text="Source Code"
+            href="https://github.com/KidCoderT/DiabetesRiskPredictor"
+            color="bg-theme_blue"
           />
           <CustomLink
             text="Linkedin"
@@ -178,9 +178,9 @@ function Home() {
             color="bg-blue-800"
           />
           <CustomLink
-            text="Source Code"
-            href="https://github.com/KidCoderT/DiabetesRiskPredictor"
-            color="bg-theme_blue"
+            text="Kaggle"
+            href="https://www.kaggle.com/kidcodert"
+            color="bg-cyan-600"
           />
         </motion.div>
       </motion.div>

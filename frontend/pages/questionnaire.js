@@ -26,10 +26,11 @@ const questionnaire = () => {
   const [diffWalk, setDiffWalk] = useState(false);
   const [sex, setSex] = useState(false);
   const [age, setAge] = useState(18);
+  const [education, setEducation] = useState(3);
   const [income, setIncome] = useState(5000);
 
   return (
-    <div className="w-full h-screen min-h-fit flex justify-evenly items-center">
+    <div className="w-full h-screen min-h-fit flex justify-evenly items-center overflow-hidden">
       <Waves h="50%" />
       <Waves h="43%" flipped />
 
@@ -274,16 +275,16 @@ const questionnaire = () => {
 
         {/* 17.Education */}
         <Field
-          index="18"
-          question={<>How much is your total income?</>}
-          htmlFor="income"
+          index="17"
+          question={<>What is your Education?</>}
+          htmlFor="education"
         >
           <NumInput
             value={income}
             setValue={setIncome}
             max={Infinity}
             min={0}
-            name="income"
+            name="education"
             hasBigNum
           />
         </Field>

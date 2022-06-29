@@ -1,8 +1,29 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const QuestionnaireTemplate = ({ header, submit_text, children }) => {
+  const setupTransition = {
+    hidden: {
+      scale: 3,
+      opacity: 0,
+    },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: {
+        delay: 0.8,
+        duration: 0.5,
+      },
+    },
+  };
+
   return (
-    <div className="w-[90%] mid:w-[60%] h-[90%] bg-white bg-opacity-40 backdrop-blur-lg drop-shadow-lg rounded-xl flex justify-center items-center p-3">
+    <motion.div
+      variants={setupTransition}
+      initial="hidden"
+      animate="visible"
+      className="w-[90%] mid:w-[60%] h-[90%] bg-white bg-opacity-40 backdrop-blur-lg drop-shadow-lg rounded-xl flex justify-center items-center p-3"
+    >
       <div className="bg-white w-full h-full rounded-md relative p-5 flex justify-center items-center flex-col">
         <div className="w-full h-fit rounded-md flex justify-center items-center">
           {/* Header */}
@@ -19,7 +40,7 @@ const QuestionnaireTemplate = ({ header, submit_text, children }) => {
         </div>
 
         {/* Submit Btn */}
-        <button class="relative py-4 mx-4 text-center w-full overflow-hidden font-medium text-gray-600 bg-gray-100 border border-gray-100 rounded-lg shadow-inner group">
+        <button class="relative flex justify-center items-center py-5 mx-4 text-center w-full overflow-hidden font-medium text-gray-600 bg-gray-100 border border-gray-100 rounded-lg shadow-inner group">
           <span class="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-gray-600 group-hover:w-full ease"></span>
           <span class="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-gray-600 group-hover:w-full ease"></span>
           <span class="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
@@ -30,7 +51,7 @@ const QuestionnaireTemplate = ({ header, submit_text, children }) => {
           </span>
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
