@@ -434,3 +434,5 @@ cython_debug/
 
 api/__pycache__
 api/.vscode/**
+
+kaggle/output/model_2.sav
