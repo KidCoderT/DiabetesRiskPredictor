@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import joblib
@@ -19,6 +20,11 @@ app.add_middleware(
 # Loading the Modules
 model_1 = joblib.load("./models/model_1.sav")
 model_2 = joblib.load("./models/model_2.sav")
+
+
+@app.get("/")
+async def docs():
+    return RedirectResponse(url="/docs")
 
 
 @app.post("/m1")
