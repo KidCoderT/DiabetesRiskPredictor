@@ -432,4 +432,5 @@ cython_debug/
 /.idea
 /.vscode
 
-api\__pycache__
+api/__pycache__
+api/.vscode/**

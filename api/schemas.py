@@ -1,16 +1,27 @@
-from pydantic import BaseModel
+# pylint: disable=no-name-in-module
 from enum import Enum
+from typing import Union
+from pydantic import BaseModel
 
 
 class WeightUnit(str, Enum):
+    """Contains Different Weight Units used For the Risk Models
+    Used so that I know when to convert the weight value
+
+    Extends:
+        str
+        Enum
+    """
+
     POUNDS = "lbs"
     KILOGRAMS = "kg"
 
 
-class ModelTestDiabetes(BaseModel):
+class ModelInputs(BaseModel):
+    """Contains the inputs required for the diabetes predictor models"""
+
     HighBP: bool | int
     HighChol: bool | int
-    CholCheck: bool | int
     BMI: float
     Smoker: bool | int
     Stroke: bool | int
@@ -19,19 +30,19 @@ class ModelTestDiabetes(BaseModel):
     Fruits: bool | int
     Veggies: bool | int
     HvyAlcoholConsump: bool | int
-    AnyHealthcare: bool | int
-    NoDocbcCost: bool | int
     GenHlth: int
     MentHlth: int
     PhysHlth: int
     DiffWalk: bool | int
-    Sex: bool | int
+    Sex: str
     Age: int
     Education: int
     Income: int
 
 
 class PreDiabetesRiskTestInput(BaseModel):
+    """Contains the Inputs Required to Calculate the Risk for Pre Diabetes"""
+
     Age: int
     Sex: str
     GestationalDiabetes: bool
@@ -40,14 +51,16 @@ class PreDiabetesRiskTestInput(BaseModel):
     PhysicallyActive: bool
 
     Weight: int
-    HeightFeet: int
-    HeightInch: int
+    HeightFeet: Union[int, None] = None
+    HeightInch: Union[int, None] = None
+    HeightMeters: Union[int, None] = None
     WeightType: WeightUnit
 
 
 class Type2DiabetesRiskTestInput(BaseModel):
+    """Contains the Inputs Required to Calculate the Risk for Type 2 Diabetes"""
+
     Age: int
-    BodyMassIndex: int
     WaistCircumference: float
     MedsForHighBP: bool
     HighBloodGlucose: bool
@@ -60,33 +73,11 @@ class Type2DiabetesRiskTestInput(BaseModel):
 
     Sex: str
 
+    Weight: int
+    HeightFeet: Union[int, None] = None
+    HeightInch: Union[int, None] = None
+    HeightMeters: Union[int, None] = None
+    WeightType: WeightUnit
 
-weight_category = {
-    "4": {
-        "10": [(119, 142), (143, 190), 190],
-        "11": [(124, 147), (148, 197), 198],
-    },
-    "5": {
-        "0": [(128, 152), (153, 203), 204],
-        "1": [(132, 157), (158, 210), 211],
-        "2": [(136, 163), (164, 217), 218],
-        "3": [(141, 168), (169, 224), 225],
-        "4": [(145, 173), (174, 231), 232],
-        "5": [(150, 179), (180, 239), 240],
-        "6": [(155, 185), (186, 246), 247],
-        "7": [(159, 190), (191, 254), 255],
-        "8": [(164, 196), (197, 261), 262],
-        "9": [(169, 202), (203, 269), 270],
-        "10": [(174, 208), (209, 277), 278],
-        "11": [(179, 214), (215, 285), 286],
-    },
-    "6": {
-        "0": [(184, 220), (221, 293), 294],
-        "1": [(189, 226), (227, 301), 302],
-        "2": [(194, 232), (233, 310), 311],
-        "3": [(200, 239), (240, 318), 319],
-        "4": [(205, 245), (246, 237), 328],
-    },
-}
 
-waist_circumference = {"male": [94, 102], "female": [80, 88]}
+waist_circumference_levels = {"male": [94, 102], "female": [80, 88]}
