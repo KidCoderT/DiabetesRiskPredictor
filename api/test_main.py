@@ -50,7 +50,9 @@ def test_pre_diabetes_method_with_valid_entries():
                                     + weight[1]
                                 )
 
-                                response = client.post("/pre", json=json)
+                                response = client.post(
+                                    "/pre_diabetes_risk_check", json=json
+                                )
                                 assert response.status_code == 200
                                 assert response.json()["total_score"] == total_score
 
@@ -66,7 +68,7 @@ def test_pre_diabetes_method_with_invalid_entries():
     """
 
     test_1 = client.post(
-        "/pre",
+        "/pre_diabetes_risk_check",
         json={
             "Age": 0,
             "Sex": "string",
@@ -89,7 +91,7 @@ def test_pre_diabetes_method_with_invalid_entries():
     )
 
     test_2 = client.post(
-        "/pre",
+        "/pre_diabetes_risk_check",
         json={
             "Age": 0,
             "Sex": "string",
@@ -183,7 +185,9 @@ def test_type2_diabetes_risk_test_with_valid_data():
                                         + fam[2]
                                     )
 
-                                    response = client.post("/type_2", json=json)
+                                    response = client.post(
+                                        "/type_2_diabetes_risk_check", json=json
+                                    )
                                     assert response.status_code == 200
                                     assert response.json()["total_score"] == total_score
 
@@ -199,7 +203,7 @@ def test_type2_diabetes_risk_test_with_invalid_entries():
     """
 
     test_1 = client.post(
-        "/type_2",
+        "/type_2_diabetes_risk_check",
         json={
             "Age": 0,
             "WaistCircumference": 0,
@@ -225,7 +229,7 @@ def test_type2_diabetes_risk_test_with_invalid_entries():
     )
 
     test_2 = client.post(
-        "/type_2",
+        "/type_2_diabetes_risk_check",
         json={
             "Age": 0,
             "WaistCircumference": 0,

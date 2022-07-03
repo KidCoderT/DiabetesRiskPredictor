@@ -1,12 +1,15 @@
 import schemas
 
 
-def pre_process_model_inputs(inputs: schemas.ModelInputs):
-    """This method will pre process the model inputs
-    given by the user into a format that the model can use"""
+def calculate_age_group(age):
+    """Calculates the Age Group For a Given Age
 
-    age = inputs.Age
+    Args:
+        age (int): the age of the person
 
+    Returns:
+        int: the age group for the person
+    """
     age_category = 1
 
     if 25 <= age <= 29:
@@ -34,7 +37,18 @@ def pre_process_model_inputs(inputs: schemas.ModelInputs):
     elif age >= 80:
         age_category = 13
 
-    income = inputs.Income
+    return age_category
+
+
+def calculate_income_level(income):
+    """Calculates the income level for a given income
+
+    Args:
+        income (int): the income of the person
+
+    Returns:
+        int: the income level for the person
+    """
 
     income_category = 1
     if 10000 <= income < 15000:
@@ -51,6 +65,19 @@ def pre_process_model_inputs(inputs: schemas.ModelInputs):
         income_category = 7
     if 75000 <= income:
         income_category = 8
+
+    return income_category
+
+
+def pre_process_model_inputs(inputs: schemas.ModelInputs):
+    """This method will pre process the model inputs
+    given by the user into a format that the model can use"""
+
+    age = inputs.Age
+    age_category = calculate_age_group(age)
+
+    income = inputs.Income
+    income_category = calculate_income_level(income)
 
     return [
         [
@@ -70,7 +97,7 @@ def pre_process_model_inputs(inputs: schemas.ModelInputs):
             inputs.DiffWalk * 1,
             ("f" not in inputs.Sex) * 1,
             age_category,
-            inputs.Education,
+            inputs.EducationLevel,
             income_category,
         ]
     ]
@@ -96,7 +123,7 @@ def calculate_bmi(
     Returns:
         str | int: returns either str(ERROR), int(The Body Mass Index)
     """
-    
+
     bmi = 0
 
     weight = weight

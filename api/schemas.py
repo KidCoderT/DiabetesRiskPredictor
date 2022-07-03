@@ -20,23 +20,23 @@ class WeightUnit(str, Enum):
 class ModelInputs(BaseModel):
     """Contains the inputs required for the diabetes predictor models"""
 
-    HighBP: bool | int
-    HighChol: bool | int
+    HighBP: Union[bool, int]
+    HighChol: Union[bool, int]
     BMI: float
-    Smoker: bool | int
-    Stroke: bool | int
-    HeartDiseaseOrAttack: bool | int
-    PhysActivity: bool | int
-    Fruits: bool | int
-    Veggies: bool | int
-    HvyAlcoholConsump: bool | int
+    Smoker: Union[bool, int]
+    Stroke: Union[bool, int]
+    HeartDiseaseOrAttack: Union[bool, int]
+    PhysActivity: Union[bool, int]
+    Fruits: Union[bool, int]
+    Veggies: Union[bool, int]
+    HvyAlcoholConsump: Union[bool, int]
     GenHlth: int
     MentHlth: int
     PhysHlth: int
-    DiffWalk: bool | int
+    DiffWalk: Union[bool, int]
     Sex: str
     Age: int
-    Education: int
+    EducationLevel: int
     Income: int
 
 
@@ -81,3 +81,49 @@ class Type2DiabetesRiskTestInput(BaseModel):
 
 
 waist_circumference_levels = {"male": [94, 102], "female": [80, 88]}
+
+
+class CombinedTestInputs(BaseModel):
+    """The Inputs Required to do the Combined Test for all models and risk tests
+
+    Extends:
+        BaseModel
+    """
+
+    Age: int
+    Sex: str
+    EducationLevel: int
+    Income: int
+
+    HighBP: bool
+    HighCholesterol: bool
+    HighBloodGlucose: bool
+    MedsForHighBP: bool
+
+    GeneralHlth: int
+    BadMentalHlthDays: int
+    BadPhysicalHlthDays: int
+    DifficultyWalking: bool
+    PhysicallyActive: bool
+    DailyExercise: bool
+    WaistCircumference: int
+    AnyPhysicalActivityInPastMonth: bool
+
+    Weight: int
+    HeightFeet: Union[int, None] = None
+    HeightInch: Union[int, None] = None
+    HeightMeters: Union[int, None] = None
+    WeightType: WeightUnit
+
+    Smoker: bool
+    NoOfDrinksPerWeek: bool
+
+    Stroke: bool
+    HeartDiseaseOrAttack: bool
+    GestationalDiabetes: bool
+
+    GrandParentUncleAuntOrFirstCousinWithDiabetes: bool
+    ParentsSiblingsOrChildWithDiabetes: bool
+
+    DoYouConsumeFruitsEveryday: bool
+    DoYouConsumeVeggiesEveryday: bool

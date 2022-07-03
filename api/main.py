@@ -5,7 +5,14 @@ import uvicorn
 import joblib
 
 import schemas
-from methods import calculate_bmi, pre_process_model_inputs
+from methods import (
+    calculate_age_group,
+    calculate_bmi,
+    pre_process_model_inputs,
+    calculate_income_level,
+)
+import pre_diabetes
+import type_2_diabetes
 
 app = FastAPI()
 
@@ -18,16 +25,17 @@ app.add_middleware(
 )
 
 # Loading the Modules
-model_1 = joblib.load("./models/model_1.sav")
-model_2 = joblib.load("./models/model_2.sav")
+MODEL_1 = joblib.load("./models/model_1.sav")
+MODEL_2 = joblib.load("./models/model_2.sav")
 
 
 @app.get("/")
 async def docs():
+    """Redirects User to the API docs page on open main page"""
     return RedirectResponse(url="/docs")
 
 
-@app.post("/m1")
+@app.post("/model_1")
 def binary_prediction(inputs: schemas.ModelInputs):
     """Gets the Model 1 Predictions For whether or not you have Diabetes
 
@@ -39,10 +47,10 @@ def binary_prediction(inputs: schemas.ModelInputs):
     """
 
     prediction_data = pre_process_model_inputs(inputs)
-    return {"result": model_1.predict(prediction_data)[0]}
+    return {"result": MODEL_1.predict(prediction_data)[0]}
 
 
-@app.post("/pre")
+@app.post("/pre_diabetes_risk_check")
 def pre_diabetes_risk_test(form_input: schemas.PreDiabetesRiskTestInput):
     """Shows the Risk of you getting pre diabetes.
 
@@ -59,39 +67,7 @@ def pre_diabetes_risk_test(form_input: schemas.PreDiabetesRiskTestInput):
         dict: Contains your risk level and total score
     """
 
-    total_score = 0
-
-    # 1. Age
-    if 40 <= form_input.Age <= 49:
-        total_score += 1
-    elif 50 <= form_input.Age <= 59:
-        total_score += 2
-    elif form_input.Age >= 60:
-        total_score += 3
-
-    # 2. Sex
-    if "f" in form_input.Sex.lower():
-        total_score += 0
-    else:
-        total_score += 1
-
-    # 3. GestationalDiabetes
-    if form_input.GestationalDiabetes:
-        total_score += 1
-
-    # 4. FamilyWith Diabetes
-    if form_input.FamilyWithDiabetes:
-        total_score += 1
-
-    # 5. Do you Have HighBP
-    if form_input.HighBp:
-        total_score += 1
-
-    # 6. Are you PhysicallyActive
-    if not form_input.PhysicallyActive:
-        total_score += 1
-
-    # 7. What is your Weight Category
+    is_female = "f" in form_input.Sex.lower()
     bmi = calculate_bmi(
         form_input.Weight,
         form_input.HeightFeet,
@@ -99,26 +75,25 @@ def pre_diabetes_risk_test(form_input: schemas.PreDiabetesRiskTestInput):
         form_input.HeightMeters,
         form_input.WeightType,
     )
-    if isinstance(bmi, str):
-        raise HTTPException(status_code=400, detail=bmi)
 
-    if 25 <= bmi < 30:
-        total_score += 1
-    elif 30 <= bmi < 40:
-        total_score += 2
-    elif bmi >= 40:
-        total_score += 3
+    score = pre_diabetes.run_check(
+        form_input.Age,
+        is_female,
+        form_input.GestationalDiabetes,
+        form_input.FamilyWithDiabetes,
+        form_input.HighBp,
+        form_input.PhysicallyActive,
+        bmi,
+    )
+
+    if isinstance(score, HTTPException):
+        raise score
 
     # result
-    if total_score <= 4:
-        return {"risk": "low", "total_score": total_score, "bmi": bmi}
-    elif total_score <= 6:
-        return {"risk": "medium", "total_score": total_score, "bmi": bmi}
-    else:
-        return {"risk": "high", "total_score": total_score, "bmi": bmi}
+    return pre_diabetes.check_result(score)
 
 
-@app.post("/m2")
+@app.post("/model_2")
 def multiclass_prediction(inputs: schemas.ModelInputs):
     """Gets the Model 2 Predictions For whether or not you have Diabetes, Pre-Diabetes or No Diabetes
 
@@ -130,10 +105,10 @@ def multiclass_prediction(inputs: schemas.ModelInputs):
     """
 
     prediction_data = pre_process_model_inputs(inputs)
-    return {"result": model_2.predict(prediction_data)[0]}
+    return {"result": MODEL_2.predict(prediction_data)[0]}
 
 
-@app.post("/type_2")
+@app.post("/type_2_diabetes_risk_check")
 def type2_diabetes_risk_test(form_input: schemas.Type2DiabetesRiskTestInput):
     """Shows the Risk of you getting type 2 diabetes.
 
@@ -152,23 +127,6 @@ def type2_diabetes_risk_test(form_input: schemas.Type2DiabetesRiskTestInput):
         dict: Contains your risk level, risk note and total score
     """
 
-    risk = ""
-    notes = ""
-
-    total_score = 0
-
-    # 1. Age
-    if 45 <= form_input.Age <= 54:
-        total_score += 1
-    elif 55 <= form_input.Age <= 64:
-        total_score += 2
-    elif 64 <= form_input.Age:
-        total_score += 3
-
-    # Sex
-    sex = "female" if "f" in form_input.Sex.lower() else "male"
-
-    # 2. BMI
     bmi = calculate_bmi(
         form_input.Weight,
         form_input.HeightFeet,
@@ -176,62 +134,129 @@ def type2_diabetes_risk_test(form_input: schemas.Type2DiabetesRiskTestInput):
         form_input.HeightMeters,
         form_input.WeightType,
     )
-    if isinstance(bmi, str):
-        raise HTTPException(status_code=400, detail=bmi)
 
-    if 25 <= bmi <= 30:
-        total_score += 1
-    elif bmi > 30:
-        total_score += 3
+    is_female = "f" in form_input.Sex.lower()
+    score = type_2_diabetes.run_check(
+        form_input.Age,
+        is_female,
+        bmi,
+        form_input.WaistCircumference,
+        form_input.DoYouDoAnyPhysActivityAtLeast30Minutes,
+        form_input.DoYouEatFruitsBerriesOrVegetablesOnADailyBasis,
+        form_input.MedsForHighBP,
+        form_input.HighBloodGlucose,
+        form_input.ParentsSiblingsOrChildWithDiabetes,
+        form_input.GrandParentUncleAuntOrFirstCousin,
+    )
+    if isinstance(score, HTTPException):
+        raise score
 
-    # 3. Waist Circumference
-    waist_data = schemas.waist_circumference_levels[sex]
-    if form_input.WaistCircumference < waist_data[0]:
-        total_score += 0
-    elif form_input.WaistCircumference <= waist_data[1]:
-        total_score += 3
+    return type_2_diabetes.check_result(score)
+
+
+@app.post("/combined_diabetes_test")
+def combined_diabetes_test(inputs: schemas.CombinedTestInputs):
+    """Unlike the Previos Methods this Api call gives you a full break down of whether
+    or not you have diabetes, your riskk of getting pre diabetes and your risk of
+    getting type 2 diabetes.
+
+    For this the method uses the model 2 as the checking model and
+    uses the same risk scores as above to test the other two requirements
+
+    Args:
+        inputs (schemas.CombinedTestInputs)
+    """
+    bmi = calculate_bmi(
+        inputs.Weight,
+        inputs.HeightFeet,
+        inputs.HeightInch,
+        inputs.HeightMeters,
+        inputs.WeightType,
+    )
+
+    is_female = "f" in inputs.Sex.lower()
+    is_male = not is_female
+
+    if (is_male and inputs.NoOfDrinksPerWeek > 14) or (
+        is_female and inputs.NoOfDrinksPerWeek > 7
+    ):
+        heavy_alcohol_consumption = True
     else:
-        total_score += 4
+        heavy_alcohol_consumption = False
 
-    # 4. Do you do Physical Activity
-    if not form_input.DoYouDoAnyPhysActivityAtLeast30Minutes:
-        total_score += 2
+    age_category = calculate_age_group(inputs.Age)
+    income_category = calculate_income_level(inputs.Income)
 
-    # 5. How Often do you eat fruits and veggies
-    if not form_input.DoYouEatFruitsBerriesOrVegetablesOnADailyBasis:
-        total_score += 1
+    family_with_diabetes = (
+        inputs.GrandParentUncleAuntOrFirstCousinWithDiabetes
+        or inputs.ParentsSiblingsOrChildWithDiabetes
+    )
 
-    # 6. Meds for high Blood Pressure
-    if form_input.MedsForHighBP:
-        total_score += 2
+    # 1. Model Prediction
+    model_prediction_data = [
+        i * 1
+        for i in [
+            inputs.HighBP,
+            inputs.HighCholesterol,
+            bmi,
+            inputs.Smoker,
+            inputs.Stroke,
+            inputs.HeartDiseaseOrAttack,
+            inputs.AnyPhysicalActivityInPastMonth,
+            inputs.DoYouConsumeFruitsEveryday,
+            inputs.DoYouConsumeVeggiesEveryday,
+            heavy_alcohol_consumption,
+            inputs.GeneralHlth,
+            inputs.BadMentalHlthDays,
+            inputs.BadPhysicalHlthDays,
+            inputs.DifficultyWalking,
+            is_male,
+            age_category,
+            inputs.EducationLevel,
+            income_category,
+        ]
+    ]
 
-    # 7. High Blood Glucose
-    if form_input.HighBloodGlucose:
-        total_score += 5
+    model_result = MODEL_2.predict([model_prediction_data])[0]
 
-    # 8. Any Family with Diabetes
-    if form_input.ParentsSiblingsOrChildWithDiabetes:
-        total_score += 5
-    elif form_input.GrandParentUncleAuntOrFirstCousin:
-        total_score += 3
+    # 2. Pre Diabetes Risk Info
+    pre_diabetes_score = pre_diabetes.run_check(
+        inputs.Age,
+        is_female,
+        inputs.GestationalDiabetes,
+        family_with_diabetes,
+        inputs.HighBP,
+        inputs.PhysicallyActive,
+        bmi,
+    )
+    if isinstance(pre_diabetes_score, HTTPException):
+        raise pre_diabetes_score
 
-    if total_score < 7:
-        risk = "low"
-        notes = " estimated 1 in 100 will develop disease"
-    elif total_score <= 11:
-        risk = "Slightly elevated"
-        notes = "estimated 1 in 25 will develop disease"
-    elif total_score <= 14:
-        risk = "moderate"
-        notes = "estimated 1 in 6 will develop disease"
-    elif total_score <= 20:
-        risk = "high"
-        notes = "estimated 1 in 3 will develop disease"
-    else:
-        risk = "Very High"
-        notes = "estimated 1 in 2 will develop disease"
+    pre_diabetes_risk_score = pre_diabetes.check_result(pre_diabetes_score)
 
-    return {"risk": risk, "approx": notes, "total_score": total_score}
+    # 3. Type 2 Diabetes Risk Info
+    type_2_diabetes_score = type_2_diabetes.run_check(
+        inputs.Age,
+        is_female,
+        bmi,
+        inputs.WaistCircumference,
+        inputs.DailyExercise,
+        inputs.DoYouConsumeFruitsEveryday or inputs.DoYouConsumeVeggiesEveryday,
+        inputs.MedsForHighBP,
+        inputs.HighBloodGlucose,
+        inputs.ParentsSiblingsOrChildWithDiabetes,
+        inputs.GrandParentUncleAuntOrFirstCousinWithDiabetes,
+    )
+    if isinstance(type_2_diabetes_score, HTTPException):
+        raise type_2_diabetes_score
+
+    type2_diabetes_risk_score = type_2_diabetes.check_result(type_2_diabetes_score)
+
+    return {
+        "Outcome": model_result,
+        "Pre-diabetes Risk Score": pre_diabetes_risk_score,
+        "Type_2 diabetes Risk Score": type2_diabetes_risk_score,
+    }
 
 
 if __name__ == "__main__":
