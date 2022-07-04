@@ -1,6 +1,6 @@
 # Diabetes Risk Predictor
 
-This is a project that i started 6 days ago on friday 3rd of june for the Global initiative Field trip
+This is a project that i started on friday 3rd of june for the Global initiative Field trip
 
 > In brief, Global Innovation Field Trip (GIFT) is a 24-hour, live, on-line event where students in grades K to 12 can give 10 minute presentations about anything they have done involving innovation, invention and creativity. GIFT’s are held 4 times a year and in 2 years have featured nearly 1,000 innovators from 51 countries giving almost 650 presentations on a wide variety of creative, new and innovative topics and projects. The next GIFT will be 16/17 July (Saturday/Sunday) and will be the greatest one yet!
 
@@ -11,16 +11,5 @@ So great Lets get to it. Ive already submitted the form for joining and so now a
 
 Also all the notes plans and more on the model im building and web app im making is in the main.py file
 
-TODOS:
- - Make Model 2
- - Host model 2 on api
- - Create Next/React app for diabetes Predictor
- - Create Small documentation for api usage
-
 **CATALOG**
-
-- 09-06-2022
-  - Submitted Form
-- 12-06-2022
-  - Created Api For Model  & tests
-  - Hosted them on heroku [link](https://kct-diabetes-api.herokuapp.com/)
+It can all be seen in the log.txt file
