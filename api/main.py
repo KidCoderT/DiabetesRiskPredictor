@@ -8,13 +8,27 @@ import schemas
 from methods import (
     calculate_age_group,
     calculate_bmi,
-    pre_process_model_inputs,
+    preprocess_model_inputs,
     calculate_income_level,
 )
 import pre_diabetes
 import type_2_diabetes
 
-app = FastAPI()
+description = """
+This is the api for my diabetes prediction models and tests.
+"""
+
+tags_metadata = [
+    {"name": "Models", "description": "Operations To Run the models"},
+    {"name": "Risk Tests", "description": "Operations To Run the Risk Tests"},
+]
+
+app = FastAPI(
+    title="DiabetesPredictorAPI",
+    description=description,
+    version="0.0.1",
+    openapi_tags=tags_metadata
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -35,7 +49,7 @@ async def docs():
     return RedirectResponse(url="/docs")
 
 
-@app.post("/model_1")
+@app.post("/model_1", tags=["Models"])
 def binary_prediction(inputs: schemas.ModelInputs):
     """Gets the Model 1 Predictions For whether or not you have Diabetes
 
@@ -46,11 +60,11 @@ def binary_prediction(inputs: schemas.ModelInputs):
         Dict: Contains the Prediction of the model
     """
 
-    prediction_data = pre_process_model_inputs(inputs)
+    prediction_data = preprocess_model_inputs(inputs)
     return {"result": MODEL_1.predict(prediction_data)[0]}
 
 
-@app.post("/pre_diabetes_risk_check")
+@app.post("/pre_diabetes_risk_check", tags=["Risk Tests"])
 def pre_diabetes_risk_test(form_input: schemas.PreDiabetesRiskTestInput):
     """Shows the Risk of you getting pre diabetes.
 
@@ -93,7 +107,7 @@ def pre_diabetes_risk_test(form_input: schemas.PreDiabetesRiskTestInput):
     return pre_diabetes.check_result(score)
 
 
-@app.post("/model_2")
+@app.post("/model_2", tags=["Models"])
 def multiclass_prediction(inputs: schemas.ModelInputs):
     """Gets the Model 2 Predictions For whether or not you have Diabetes, Pre-Diabetes or No Diabetes
 
@@ -104,11 +118,11 @@ def multiclass_prediction(inputs: schemas.ModelInputs):
         Dict: Contains the Prediction of the model
     """
 
-    prediction_data = pre_process_model_inputs(inputs)
+    prediction_data = preprocess_model_inputs(inputs)
     return {"result": MODEL_2.predict(prediction_data)[0]}
 
 
-@app.post("/type_2_diabetes_risk_check")
+@app.post("/type_2_diabetes_risk_check", tags=["Risk Tests"])
 def type2_diabetes_risk_test(form_input: schemas.Type2DiabetesRiskTestInput):
     """Shows the Risk of you getting type 2 diabetes.
 
@@ -154,7 +168,7 @@ def type2_diabetes_risk_test(form_input: schemas.Type2DiabetesRiskTestInput):
     return type_2_diabetes.check_result(score)
 
 
-@app.post("/combined_diabetes_test")
+@app.post("/combined_diabetes_test", tags=["Models", "Risk Tests"])
 def combined_diabetes_test(inputs: schemas.CombinedTestInputs):
     """Unlike the Previos Methods this Api call gives you a full break down of whether
     or not you have diabetes, your riskk of getting pre diabetes and your risk of

@@ -1,15 +1,16 @@
 import schemas
 
 
-def calculate_age_group(age):
+def calculate_age_group(age: int) -> int:
     """Calculates the Age Group For a Given Age
 
     Args:
         age (int): the age of the person
 
     Returns:
-        int: the age group for the person
+        int: the group hes supposed to be in
     """
+
     age_category = 1
 
     if 25 <= age <= 29:
@@ -40,14 +41,14 @@ def calculate_age_group(age):
     return age_category
 
 
-def calculate_income_level(income):
-    """Calculates the income level for a given income
+def calculate_income_level(income: int) -> int:
+    """Given a persons income calculates the income level for a person
 
     Args:
-        income (int): the income of the person
+        income (int): the monthly income of a person
 
     Returns:
-        int: the income level for the person
+        int: the income level of the person
     """
 
     income_category = 1
@@ -69,9 +70,15 @@ def calculate_income_level(income):
     return income_category
 
 
-def pre_process_model_inputs(inputs: schemas.ModelInputs):
-    """This method will pre process the model inputs
-    given by the user into a format that the model can use"""
+def preprocess_model_inputs(inputs: schemas.ModelInputs) -> list:
+    """Process the user inputs and set it up for the model to use
+
+    Args:
+        inputs (schemas.ModelInputs): the user inputs
+
+    Returns:
+        list: the format in which the model takes the input
+    """
 
     age = inputs.Age
     age_category = calculate_age_group(age)
@@ -105,9 +112,9 @@ def pre_process_model_inputs(inputs: schemas.ModelInputs):
 
 def calculate_bmi(
     weight: int,
-    feet=None,
-    inches=None,
-    meters=None,
+    feet: None | int,
+    inches: None | int,
+    meters: None | float,
     unit: schemas.WeightUnit = schemas.WeightUnit.KILOGRAMS,
 ):
     """Calculates the Body Mass Index of a person given the persons weight and height.
@@ -115,9 +122,9 @@ def calculate_bmi(
 
     Args:
         weight (int): the weight of the person in their given unit.
-        feet (_type_, optional): Their Height feet portion. Defaults to None.
-        inches (_type_, optional): Their Height inch portion. Defaults to None.
-        meters (_type_, optional): THeir Height in meters. Defaults to None.
+        feet (int, optional): Their Height feet portion. Defaults to None.
+        inches (int, optional): Their Height inch portion. Defaults to None.
+        meters (float, optional): THeir Height in meters. Defaults to None.
         unit (schemas.WeightUnit, optional): The Unit of weight. Defaults to schemas.WeightUnit.KILOGRAMS.
 
     Returns:
@@ -125,19 +132,17 @@ def calculate_bmi(
     """
 
     bmi = 0
-
-    weight = weight
     if unit.value == "kg":
         # Check Fields are Present:
         if meters not in [None, 0]:
             height = meters
-            bmi = weight / (height**2)
+            bmi = weight / (height**2)  # type: ignore
         else:
             return "If your specifying the weight in kilograms then you also need to specify the Height in meters!"
 
     else:
-        if feet not in [None, 0] or inches not in [None, 0]:
-            height = inches + (feet * 12)
+        if feet not in [None, 0] and inches not in [None, 0]:
+            height = inches + (feet * 12)  # type: ignore
             bmi = (weight / (height**2)) * 703
         else:
             return "If your specifying the weight in pounds then you also need to specify the Height in feet & inches!"

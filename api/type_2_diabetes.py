@@ -3,17 +3,35 @@ from schemas import waist_circumference_levels
 
 
 def run_check(
-    age,
-    is_female,
-    bmi,
-    waist_circumference,
-    do_any_physical_activity,
-    eat_good,
-    do_meds_for_high_bp,
-    high_blood_glucose,
-    parents_siblings_or_child_with_diabetes,
-    grandparents_uncle_aunt_or_first_cousin_with_diabetes,
-):
+    age: int,
+    is_female: bool,
+    bmi: int | str,
+    waist_circumference: float,
+    do_any_physical_activity: bool,
+    eat_good: bool,
+    do_meds_for_high_bp: bool,
+    high_blood_glucose: bool,
+    parents_siblings_or_child_with_diabetes: bool,
+    grandparents_uncle_aunt_or_first_cousin_with_diabetes: bool,
+) -> int | HTTPException:
+    """Runs the Type 2 diabetes check analyzing the user input and showing the final score
+
+    Args:
+        age (int): the age of the person
+        is_female (bool): the gender of the person
+        bmi (int | str): the body mass index of the person
+        waist_circumference (float): the waist circumference of a person
+        do_any_physical_activity (bool): does the person do any physical activity
+        eat_good (bool): does the person eat fruits or veggies daily
+        do_meds_for_high_bp (bool): does the person do meds for high bp
+        high_blood_glucose (bool): does the person have high blood glucose
+        parents_siblings_or_child_with_diabetes (bool): parents, sibling or child of the person with diabetes
+        grandparents_uncle_aunt_or_first_cousin_with_diabetes (bool): grandparents uncle aunt or first_cousin with diabetes
+
+    Returns:
+        int | HTTPException: the score obtained for the person. the lower the better
+    """
+
     total_score = 0
 
     # 1. Age
@@ -30,7 +48,7 @@ def run_check(
     # 2. BMI
     if isinstance(bmi, str):
         return HTTPException(status_code=400, detail=bmi)
-
+    
     if 25 <= bmi <= 30:
         total_score += 1
     elif bmi > 30:
@@ -70,7 +88,16 @@ def run_check(
     return total_score
 
 
-def check_result(total_score: int):
+def check_result(total_score: int) -> dict:
+    """Check the risk of getting type_2_diabetes by the persons score
+
+    Args:
+        total_score (int): the score obtained by the above check
+
+    Returns:
+        dict: the result of the check
+    """
+
     risk = ""
     notes = ""
 

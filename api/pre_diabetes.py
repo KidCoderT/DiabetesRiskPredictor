@@ -2,27 +2,27 @@ from fastapi import HTTPException
 
 
 def run_check(
-    age,
-    is_female,
-    gestational_diabetes,
-    family_with_diabetes,
-    high_bp,
-    physically_active,
-    bmi,
-):
-    """Runs the Prediabetes Check and gets the total score
+    age: int,
+    is_female: bool,
+    gestational_diabetes: bool,
+    family_with_diabetes: bool,
+    high_bp: bool,
+    physically_active: bool,
+    bmi: str | float,
+) -> int | HTTPException:
+    """Runs the Pre Diabetes Risk Test and Gets the total score
 
     Args:
-        age (int): age of the person
-        is_female (bool): if the persons a female
-        gestational_diabetes (bool): has the person had gestational diabetes
-        family_with_diabetes (bool): fam with diabetes
-        high_bp (boool): high bp?
-        physically_active (bool): is he physically active
-        bmi (int | str): BMI of the person
+        age (int): the age of the person
+        is_female (bool): is the person female
+        gestational_diabetes (bool): has the person ever had gestational diabetes
+        family_with_diabetes (bool): family with diabetes
+        high_bp (bool): do you have high BP
+        physically_active (bool): are yiu physically active
+        bmi (str | float): whats your calculated bmi
 
     Returns:
-        _type_: _description_
+        int | HTTPException: either returns a total score or an error message
     """
 
     total_score = 0
@@ -71,16 +71,16 @@ def run_check(
     return total_score
 
 
-def check_result(total_score):
+def check_result(total_score: int) -> dict:
     """Shows the test result for a given score
 
     Args:
         total_score (int): the score obtained
 
     Returns:
-        json: the result
+        dict: the result
     """
-    
+
     if total_score <= 4:
         return {"risk": "low", "total_score": total_score}
     elif total_score <= 6:
