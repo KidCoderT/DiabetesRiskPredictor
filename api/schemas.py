@@ -116,7 +116,7 @@ class CombinedTestInputs(BaseModel):
     WeightType: WeightUnit
 
     Smoker: bool
-    NoOfDrinksPerWeek: bool
+    NoOfDrinksPerWeek: int
 
     Stroke: bool
     HeartDiseaseOrAttack: bool

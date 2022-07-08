@@ -114,10 +114,10 @@ const EmojiRating = ({ rating, setRating }) => {
         let isActive = false;
 
         if (hover !== undefined) {
-          if (hover === data.index) {
+          if (hover >= data.index) {
             isActive = true;
           }
-        } else if (rating === data.index) {
+        } else if (rating >= data.index) {
           isActive = true;
         }
 
@@ -125,7 +125,7 @@ const EmojiRating = ({ rating, setRating }) => {
           <button
             type="button"
             key={data.index}
-            className="bg-transparent hover:-translate-y-3 transition-all duration-100 ease-in-out border-none outline-none cursor-pointer px-1 lg:px-2"
+            className="bg-transparent hover:scale-110 transition-all duration-100 ease-in-out border-none outline-none cursor-pointer px-1 lg:px-2"
             onClick={() => setRating(data.index)}
             onMouseEnter={() => setHover(data.index)}
             onMouseLeave={() => setHover(undefined)}

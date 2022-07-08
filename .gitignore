@@ -18,6 +18,7 @@ ipython_config.py
 #   git rm -r .ipynb_checkpoints/
 
 ### Node ###
+# B
 # Logs
 logs
 *.log
@@ -436,3 +437,6 @@ api/__pycache__
 api/.vscode/**
 
 kaggle/output/model_2.sav
+
+hostings/*
+

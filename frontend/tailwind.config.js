@@ -21,6 +21,10 @@ module.exports = {
       height: {
         half_screen: "50%",
       },
+      animation: {
+        bounce200: "bounce 2s infinite 200ms",
+        bounce400: "bounce 2s infinite 400ms",
+      },
     },
   },
   plugins: [

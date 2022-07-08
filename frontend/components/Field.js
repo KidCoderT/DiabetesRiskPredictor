@@ -2,7 +2,7 @@ import React from "react";
 
 const Field = ({ index, question, note = undefined, htmlFor, children }) => {
   return (
-    <div className="w-full min-h-10 flex-col text-center sm:text-left sm:flex-row flex justify-center sm:justify-between items-center text-xl mb-3">
+    <div className="w-full min-h-10 flex-col text-center sm:text-left sm:flex-row flex justify-center sm:justify-between items-center text-xl mb-2">
       <label htmlFor={htmlFor} className="font-fredoka sm:text-lg">
         {index}. {question}{" "}
         {note !== undefined ? (

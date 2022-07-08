@@ -4,13 +4,13 @@ import React from "react";
  TODO Animate Yes & No enter and exit effects
 */
 
-const ToggleSwitch = ({ value, toggle, name, options = ["Yes", "No"] }) => {
+const ToggleSwitch = ({ value, toggle, name }) => {
   const onToggle = () => toggle(!value);
 
   return (
     <div className="w-fit h-fit flex items-center">
       <h1 className="font-fredoka uppercase mr-5  transition duration-300">
-        {value ? options[0] : options[1]}
+        {value ? "Yes" : "No"}
       </h1>
       <div className="w-fit h-full flex items-center relative">
         <input
@@ -23,7 +23,7 @@ const ToggleSwitch = ({ value, toggle, name, options = ["Yes", "No"] }) => {
         />
         <button
           onClick={() => onToggle()}
-          class="dot absolute h-9 w-9 border-2 border-gray-200 bg-white rounded-full shadow -left-1 top-[-0.1rem] transition"
+          className="dot absolute h-9 w-9 border-2 border-gray-200 bg-white rounded-full shadow -left-1 top-[-0.1rem] transition"
         ></button>
       </div>
     </div>
