@@ -18,18 +18,6 @@ const education = [
   { value: 6, text: "College 4 years or more (College graduate)" },
 ];
 
-async function getData(data) {
-  const res = await fetch(`http://127.0.0.1:8000/combined_diabetes_test`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: data,
-  });
-  const result = await res.json();
-  return result;
-}
-
 const questionnaire = () => {
   const [age, setAge] = useState(0); // to check
   const [gender, setGender] = useState("male");
@@ -71,10 +59,24 @@ const questionnaire = () => {
   const [PSOCWithDiabetes, setPSOCWithDiabetes] = useState(false);
 
   const [fetchingData, setFetchingData] = useState(false);
-
   const [errors, setErrors] = useState([]);
 
-  const submitForm = () => {
+  const getData = async (data) => {
+    const response = await fetch(
+      `http://127.0.0.1:8000/combined_diabetes_test`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+
+    return await response.json();
+  };
+
+  const submitForm = async () => {
     let errors_ = [];
 
     if (age < 13) {
@@ -110,7 +112,7 @@ const questionnaire = () => {
     setErrors(errors_);
 
     if (errors_.length === 0) {
-      let json = {
+      let data = {
         Age: age,
         Sex: gender,
         EducationLevel: educationLevel,
@@ -145,10 +147,8 @@ const questionnaire = () => {
 
       setFetchingData(true);
 
-      // TODO
-      // console.log(json);
-      // let response = getData(json);
-      // console.log(response);
+      let response = await getData(data);
+      console.log(response);
 
       setFetchingData(false);
     }

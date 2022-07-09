@@ -108,7 +108,7 @@ const EmojiRating = ({ rating, setRating }) => {
   const [hover, setHover] = useState(undefined);
 
   return (
-    <di className="w-min h-fit flex items-center justify-center">
+    <div className="w-min h-fit flex items-center justify-center">
       <h1 className="mr-5 font-fredoka text-xl">{rating}</h1>
       {ratings.map((data) => {
         let isActive = false;
@@ -134,7 +134,7 @@ const EmojiRating = ({ rating, setRating }) => {
           </button>
         );
       })}
-    </di>
+    </div>
   );
 };
 

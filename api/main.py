@@ -273,10 +273,5 @@ def combined_diabetes_test(inputs: schemas.CombinedTestInputs):
     }
 
 
-@app.post("/test")
-def test_post(inputs: schemas.TestSchema):
-    return {"name": inputs.input}
-
-
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)  # type: ignore
