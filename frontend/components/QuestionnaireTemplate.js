@@ -8,6 +8,7 @@ const QuestionnaireTemplate = ({
   onSubmit,
   fetchingData,
   children,
+  style = "flex-col",
 }) => {
   const setupTransition = {
     hidden: {
@@ -48,7 +49,9 @@ const QuestionnaireTemplate = ({
             </div>
 
             {/* Body */}
-            <div className="w-full grow rounded-lg border-2 scroll-smooth scrollbar border-gray-100 shadow-xl mt-5 mb-2 overflow-y-auto px-6 py-5 flex flex-col items-center">
+            <div
+              className={`w-full grow rounded-lg border-2 scroll-smooth scrollbar border-gray-100 shadow-xl mt-5 mb-2 overflow-y-auto px-6 py-5 flex items-center ${style}}`}
+            >
               {children}
             </div>
 
@@ -75,8 +78,8 @@ const QuestionnaireTemplate = ({
           </>
         ) : (
           <>
-            <div class="flex items-center justify-center ">
-              <div class="w-40 h-40 border-t-8 border-b-8 border-theme_blue rounded-full animate-spin"></div>
+            <div className="flex items-center justify-center ">
+              <div className="w-40 h-40 border-t-8 border-b-8 border-theme_blue rounded-full animate-spin"></div>
             </div>
           </>
         )}

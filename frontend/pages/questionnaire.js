@@ -5,6 +5,7 @@ import ToggleSwitch from "../components/ToggleSwitch";
 import Field from "../components/Field";
 import EmojiRating from "../components/EmojiRating";
 import NumInput from "../components/NumInput";
+import Router from "next/router";
 
 const education = [
   { value: 1, text: "Never attended school or only kindergarten" },
@@ -19,9 +20,9 @@ const education = [
 ];
 
 const questionnaire = () => {
-  const [age, setAge] = useState(0); // to check
+  const [age, setAge] = useState(0);
   const [gender, setGender] = useState("male");
-  const [educationLevel, setEducationLevel] = useState(undefined); // to check
+  const [educationLevel, setEducationLevel] = useState(undefined);
   const [income, setIncome] = useState(0);
 
   const [highBp, setHighBp] = useState(false);
@@ -29,21 +30,21 @@ const questionnaire = () => {
   const [highBloodGlucose, setHighBloodGlucose] = useState(false);
   const [medsForHighBp, setMedsForHighBp] = useState(false);
 
-  const [genHlth, setGenHlth] = useState(1);
+  const [genHlth, setGenHlth] = useState(5);
   const [badMentalHlthDays, setBadMentalHlthDays] = useState(0);
   const [badPhysicalHlthDays, setBadPhysicalHlthDays] = useState(0);
   const [difficultyWalking, setDifficultyWalking] = useState(false);
   const [physicallyActive, setPhysicallyActive] = useState(false);
   const [doDailyExercise, setDoDailyExercise] = useState(false);
-  const [waistCircumference, setWaistCircumference] = useState(0.0); // to check
+  const [waistCircumference, setWaistCircumference] = useState(0.0);
   const [anyPhysicalActivityInPastMonth, setAnyPhysicalActivityInPastMonth] =
     useState(false);
 
   const [weightUnit, setWeightUnit] = useState("kg");
-  const [weight, setWeight] = useState(0.0); // to check
-  const [heightFeet, setHeightFeet] = useState(0); // optional to check
-  const [heightInch, setHeightInch] = useState(0); // optional to check
-  const [heightMeters, setHeightMeters] = useState(0.0); // optional to check
+  const [weight, setWeight] = useState(0.0);
+  const [heightFeet, setHeightFeet] = useState(0);
+  const [heightInch, setHeightInch] = useState(0);
+  const [heightMeters, setHeightMeters] = useState(0.0);
 
   const [isSmoker, setIsSmoker] = useState(false);
   const [noOfDrinksPerWeek, setNoOfDrinksPerWeek] = useState(0);
@@ -62,18 +63,20 @@ const questionnaire = () => {
   const [errors, setErrors] = useState([]);
 
   const getData = async (data) => {
-    const response = await fetch(
-      `http://127.0.0.1:8000/combined_diabetes_test`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    let res;
 
-    return await response.json();
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/combined_diabetes_test`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => (res = data))
+      .then(() => console.log(res));
+
+    return res;
   };
 
   const submitForm = async () => {
@@ -115,7 +118,7 @@ const questionnaire = () => {
       let data = {
         Age: age,
         Sex: gender,
-        EducationLevel: educationLevel,
+        EducationLevel: parseInt(educationLevel),
         Income: income,
         HighBP: highBp,
         HighCholesterol: highCholesterol,
@@ -148,9 +151,14 @@ const questionnaire = () => {
       setFetchingData(true);
 
       let response = await getData(data);
+
+      console.log(data);
       console.log(response);
 
-      setFetchingData(false);
+      Router.push({
+        pathname: `/result`,
+        query: response,
+      });
     }
   };
 
@@ -181,7 +189,7 @@ const questionnaire = () => {
               onChange={(e) => setGender(e.target.value)}
               className="form-select w-32 appearance-none block px-4 py-1.5 text-base font-fredoka text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0"
               aria-label="Default select example"
-              defaultValue="male"
+              defaultValue={gender}
             >
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -197,7 +205,7 @@ const questionnaire = () => {
           <select
             className="font-fredoka border-black border-2 focus:border-blue-500 px-1 py-1 text-ellipsis rounded w-64"
             onChange={(e) => setEducationLevel(e.target.value)}
-            defaultValue={undefined}
+            defaultValue={educationLevel}
           >
             <option
               className="w-full text-md border-b-2 border-gray-400"
@@ -284,10 +292,11 @@ const questionnaire = () => {
           index={9}
           question={
             <>
-              On a Scale of 1 to 5. How would you rate <br /> your Health in
+              On a Scale of 5 to 1. How would you rate <br /> your Health in
               General?
             </>
           }
+          note="5 being the worst and 1 being the best!"
           htmlFor="genHlth"
         >
           <EmojiRating rating={genHlth} setRating={setGenHlth} />
@@ -418,10 +427,9 @@ const questionnaire = () => {
               onChange={(e) => setWeightUnit(e.target.value)}
               className="form-select w-20 appearance-none block px-3 py-1.5 ml-2 text-base font-fredoka text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0"
               aria-label="Default select example"
+              defaultValue={weightUnit}
             >
-              <option value="kg" selected>
-                kg
-              </option>
+              <option value="kg">kg</option>
               <option value="lbm">lbm</option>
             </select>
           </div>
@@ -477,7 +485,7 @@ const questionnaire = () => {
         {/* =========================== Section 4 =========================== */}
         <Field
           index={19}
-          question={<>Have you done any physical activity in the past month?</>}
+          question={<>Have you smoked at least a 100 cigarettes in you life?</>}
           note={"5 packs = 100 cigarettes"}
           htmlFor={"isSmoker"}
         >

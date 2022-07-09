@@ -3,14 +3,14 @@ import { IconName } from "react-icons/bi";
 
 const ratings = [
   {
-    index: 1,
+    index: 5,
     icon: (color = "text-red-700") => (
       <svg
         aria-hidden="true"
         focusable="false"
         data-prefix="far"
         data-icon="angry"
-        class={`w-7 ${color}`}
+        className={`w-7 ${color}`}
         role="img"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 496 512"
@@ -23,14 +23,14 @@ const ratings = [
     ),
   },
   {
-    index: 2,
+    index: 4,
     icon: (color = "text-red-600") => (
       <svg
         aria-hidden="true"
         focusable="false"
         data-prefix="far"
         data-icon="frown"
-        class={`w-7 ${color}`}
+        className={`w-7 ${color}`}
         role="img"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 496 512"
@@ -50,7 +50,7 @@ const ratings = [
         focusable="false"
         data-prefix="far"
         data-icon="meh"
-        class={`w-7 ${color}`}
+        className={`w-7 ${color}`}
         role="img"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 496 512"
@@ -63,14 +63,14 @@ const ratings = [
     ),
   },
   {
-    index: 4,
+    index: 2,
     icon: (color = "text-green-600") => (
       <svg
         aria-hidden="true"
         focusable="false"
         data-prefix="far"
         data-icon="smile"
-        class={`w-7 ${color}`}
+        className={`w-7 ${color}`}
         role="img"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 496 512"
@@ -83,14 +83,14 @@ const ratings = [
     ),
   },
   {
-    index: 5,
+    index: 1,
     icon: (color = "text-green-700") => (
       <svg
         aria-hidden="true"
         focusable="false"
         data-prefix="far"
         data-icon="grin-stars"
-        class={`w-7 ${color}`}
+        className={`w-7 ${color}`}
         role="img"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 496 512"
@@ -114,10 +114,10 @@ const EmojiRating = ({ rating, setRating }) => {
         let isActive = false;
 
         if (hover !== undefined) {
-          if (hover >= data.index) {
+          if (hover <= data.index) {
             isActive = true;
           }
-        } else if (rating >= data.index) {
+        } else if (rating <= data.index) {
           isActive = true;
         }
 
