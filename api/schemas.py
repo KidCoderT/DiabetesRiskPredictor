@@ -127,3 +127,7 @@ class CombinedTestInputs(BaseModel):
 
     DoYouConsumeFruitsEveryday: bool
     DoYouConsumeVeggiesEveryday: bool
+
+
+class TestSchema(BaseModel):
+    input: str
