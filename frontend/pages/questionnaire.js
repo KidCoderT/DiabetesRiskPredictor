@@ -407,7 +407,7 @@ const questionnaire = () => {
               defaultValue={weightUnit}
             >
               <option value="kg">kg</option>
-              <option value="lbm">lbm</option>
+              <option value="lbs">lbs</option>
             </select>
           </div>
         </Field>
