@@ -66,10 +66,10 @@ const result = () => {
           Router.push(`/`);
         }}
         fetchingData={fetchingData}
-        style="justify-evenly items-center"
+        style="flex-col md:flex-row justify-evenly items-center"
         loadingText="Fetching Predictions!"
       >
-        <div className="w-56 text-center uppercase h-fit font-fredoka px-1 flex items-center justify-center flex-col">
+        <div className="w-full md:w-56 text-center uppercase h-fit font-fredoka px-1 flex items-center justify-center flex-col">
           <div className="rounded border-8 border-black flex justify-center items-center w-44 h-44 flex-col">
             <h2 className="text-[64px] text-center m-0">
               {response["Pre-diabetes Risk Score"].total_score}

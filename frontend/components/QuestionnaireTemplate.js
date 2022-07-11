@@ -81,7 +81,9 @@ const QuestionnaireTemplate = ({
           <>
             <div className="flex items-center justify-center flex-col">
               <div className="w-40 h-40 border-t-8 border-b-8 border-theme_blue rounded-full animate-spin"></div>
-              <h1 className="font-fredoka text-3xl text-center mt-4">{loadingText}</h1>
+              <h1 className="font-fredoka text-3xl text-center mt-4">
+                {loadingText}
+              </h1>
             </div>
           </>
         )}
