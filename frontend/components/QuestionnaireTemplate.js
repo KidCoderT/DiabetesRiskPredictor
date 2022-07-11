@@ -7,8 +7,9 @@ const QuestionnaireTemplate = ({
   errors,
   onSubmit,
   fetchingData,
-  children,
   style = "flex-col",
+  loadingText,
+  children,
 }) => {
   const setupTransition = {
     hidden: {
@@ -50,7 +51,7 @@ const QuestionnaireTemplate = ({
 
             {/* Body */}
             <div
-              className={`w-full grow rounded-lg border-2 scroll-smooth scrollbar border-gray-100 shadow-xl mt-5 mb-2 overflow-y-auto px-6 py-5 flex items-center ${style}}`}
+              className={`w-full grow rounded-lg border-2 scroll-smooth scrollbar border-gray-100 shadow-xl mt-5 mb-2 overflow-y-auto px-6 py-5 flex items-center ${style}`}
             >
               {children}
             </div>
@@ -78,8 +79,9 @@ const QuestionnaireTemplate = ({
           </>
         ) : (
           <>
-            <div className="flex items-center justify-center ">
+            <div className="flex items-center justify-center flex-col">
               <div className="w-40 h-40 border-t-8 border-b-8 border-theme_blue rounded-full animate-spin"></div>
+              <h1 className="font-fredoka text-3xl text-center mt-4">{loadingText}</h1>
             </div>
           </>
         )}

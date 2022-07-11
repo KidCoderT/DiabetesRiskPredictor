@@ -27,8 +27,10 @@ app = FastAPI(
     title="DiabetesPredictorAPI",
     description=description,
     version="0.0.1",
-    openapi_tags=tags_metadata
+    openapi_tags=tags_metadata,
 )
+
+origins = ["http://localhost:3000/", "https://kct-diabetes-predictor.herokuapp.com/"]
 
 app.add_middleware(
     CORSMiddleware,

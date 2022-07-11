@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Router, { useRouter } from "next/router";
 import QuestionnaireTemplate from "../components/QuestionnaireTemplate";
 import Waves from "../components/Waves";
@@ -11,24 +11,46 @@ const model_comments = [
 
 const result = () => {
   const router = useRouter();
-  const json = router.query;
+  const [fetchingData, setFetchingData] = useState(true);
+  const [response, setResponse] = useState({
+    Outcome: 0,
+    "Pre-diabetes Risk Score": {
+      risk: "",
+      total_score: 0,
+    },
+    "Type_2 diabetes Risk Score": {
+      risk: "",
+      approx: "",
+      total_score: 0,
+    },
+  });
 
-  let response = json;
-  console.log(response);
+  const onStartup = async (data) => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/combined_diabetes_test`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: data,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setResponse({ ...data });
+      })
+      .then(() => {
+        setFetchingData(false);
+      });
+  };
 
-  // for tests
-  // let response = {
-  //   Outcome: 0,
-  //   "Pre-diabetes Risk Score": {
-  //     risk: "low",
-  //     total_score: 4,
-  //   },
-  //   "Type_2 diabetes Risk Score": {
-  //     risk: "low",
-  //     approx: " estimated 1 in 100 will develop disease",
-  //     total_score: 6,
-  //   },
-  // };
+  useEffect(() => {
+    if (!router.isReady) return;
+
+    const data = router.query;
+    let dataCopy = Object.keys({ ...data })[0];
+    onStartup(dataCopy);
+    console.log(response);
+  }, [router.isReady]);
 
   return (
     <div className="w-full h-screen min-h-fit flex justify-evenly items-center overflow-hidden">
@@ -43,8 +65,9 @@ const result = () => {
           e.preventDefault();
           Router.push(`/`);
         }}
-        fetchingData={false}
+        fetchingData={fetchingData}
         style="justify-evenly items-center"
+        loadingText="Fetching Predictions!"
       >
         <div className="w-56 text-center uppercase h-fit font-fredoka px-1 flex items-center justify-center flex-col">
           <div className="rounded border-8 border-black flex justify-center items-center w-44 h-44 flex-col">

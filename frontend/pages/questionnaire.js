@@ -59,25 +59,7 @@ const questionnaire = () => {
   const [GPUAOFCWithDiabetes, setGPUAOFCWithDiabetes] = useState(false);
   const [PSOCWithDiabetes, setPSOCWithDiabetes] = useState(false);
 
-  const [fetchingData, setFetchingData] = useState(false);
   const [errors, setErrors] = useState([]);
-
-  const getData = async (data) => {
-    let res;
-
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/combined_diabetes_test`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => (res = data))
-      .then(() => console.log(res));
-
-    return res;
-  };
 
   const submitForm = async () => {
     let errors_ = [];
@@ -116,26 +98,26 @@ const questionnaire = () => {
 
     if (errors_.length === 0) {
       let data = {
-        Age: age,
+        Age: parseInt(age),
         Sex: gender,
         EducationLevel: parseInt(educationLevel),
-        Income: income,
+        Income: parseInt(income),
         HighBP: highBp,
         HighCholesterol: highCholesterol,
         HighBloodGlucose: highBloodGlucose,
         MedsForHighBP: medsForHighBp,
-        GeneralHlth: genHlth,
-        BadMentalHlthDays: badMentalHlthDays,
-        BadPhysicalHlthDays: badPhysicalHlthDays,
+        GeneralHlth: parseInt(genHlth),
+        BadMentalHlthDays: parseInt(badMentalHlthDays),
+        BadPhysicalHlthDays: parseInt(badPhysicalHlthDays),
         DifficultyWalking: difficultyWalking,
         PhysicallyActive: physicallyActive,
         DailyExercise: doDailyExercise,
-        WaistCircumference: waistCircumference,
+        WaistCircumference: parseFloat(waistCircumference),
         AnyPhysicalActivityInPastMonth: anyPhysicalActivityInPastMonth,
-        Weight: weight,
-        HeightFeet: heightFeet,
-        HeightInch: heightInch,
-        HeightMeters: heightMeters,
+        Weight: parseFloat(weight),
+        HeightFeet: parseInt(heightFeet),
+        HeightInch: parseInt(heightInch),
+        HeightMeters: parseFloat(heightMeters),
         WeightType: weightUnit,
         Smoker: isSmoker,
         NoOfDrinksPerWeek: noOfDrinksPerWeek,
@@ -147,17 +129,11 @@ const questionnaire = () => {
         DoYouConsumeFruitsEveryday: consumeFruitsEveryday,
         DoYouConsumeVeggiesEveryday: consumeVeggiesEveryday,
       };
-
-      setFetchingData(true);
-
-      let response = await getData(data);
-
       console.log(data);
-      console.log(response);
 
       Router.push({
         pathname: `/result`,
-        query: response,
+        query: JSON.stringify(data),
       });
     }
   };
@@ -175,7 +151,8 @@ const questionnaire = () => {
           e.preventDefault();
           submitForm();
         }}
-        fetchingData={fetchingData}
+        fetchingData={false}
+        style="flex-col"
       >
         {/* =========================== Section 1 =========================== */}
         <Field index={1} question={<>How old are you?</>} htmlFor={"age"}>
@@ -583,7 +560,7 @@ const questionnaire = () => {
           index={26}
           question={
             <>
-              Do your Grandparents, Uncle, Aunt or First COusins have any
+              Do your Grandparents, Uncle, Aunt or First Cousins have any
               diabetes?
             </>
           }
