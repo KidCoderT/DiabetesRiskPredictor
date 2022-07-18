@@ -92,8 +92,8 @@ function Home() {
           }}
           className="font-fredoka text-2xl mt-5 max-w-[500px]"
         >
-          This is a small app that can predict wheter or not you have diabetes,
-          will get diabetes and even if your diabetes will increase.
+          This is a small app that can predict whether you have diabetes or not,
+          or you are at the risk of getting diabetes in future
           <br />
         </motion.p>
         <motion.p
@@ -108,10 +108,11 @@ function Home() {
           }}
           className="text-sm text-gray-600 my-5 leading-4 max-w-[500px] p-2 border-2 border-black rounded border-dashed"
         >
-          Do note!: you should still consider checking a doctor for the actual
-          result. <br />
-          this is just a project and though it is pretty accurate you should
-          always consult a doctor when you get a bad reading.
+          Do note!: you should still consult a doctor for the actual result.{" "}
+          <br />
+          This is just a support tool and though it is pretty accurate, you
+          should always consult a doctor especially when you get a serious
+          reading.
         </motion.p>
 
         <Link href="/questionnaire">

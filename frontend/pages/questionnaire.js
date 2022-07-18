@@ -10,7 +10,7 @@ import Router from "next/router";
 const education = [
   { value: 1, text: "Never attended school or only kindergarten" },
   { value: 2, text: "Grades 1 - 8 (Elementary)" },
-  { value: 3, text: "Grades 9 - 11 (Some high school)" },
+  { value: 3, text: "Grades 9 - 11 (High school)" },
   { value: 4, text: "Grade 12 or GED (High school graduate)" },
   {
     value: 5,
@@ -159,7 +159,7 @@ const questionnaire = () => {
           <NumInput value={age} setValue={setAge} name={"age"} max={Infinity} />
         </Field>
 
-        <Field index={2} question={<>Whats Your Gender?</>} htmlFor={"gender"}>
+        <Field index={2} question={<>Gender?</>} htmlFor={"gender"}>
           <div className="w-fit h-fit flex items-center flex-column">
             <select
               name="gender"
@@ -176,7 +176,7 @@ const questionnaire = () => {
 
         <Field
           index={3}
-          question={<>Whats Your Education Level?</>}
+          question={<>What is Your Education Level?</>}
           htmlFor={"education"}
         >
           <select
@@ -204,7 +204,8 @@ const questionnaire = () => {
 
         <Field
           index={4}
-          question={<>Whats is your income level?</>}
+          question={<>What is is your income level?</>}
+          note="In Dollars"
           htmlFor={"income"}
         >
           <NumInput
@@ -388,7 +389,11 @@ const questionnaire = () => {
 
         <div className="my-3" />
         {/* =========================== Section 3 =========================== */}
-        <Field index={17} question={<>Whats Your Weight?</>} htmlFor={"weight"}>
+        <Field
+          index={17}
+          question={<>What is Your Weight?</>}
+          htmlFor={"weight"}
+        >
           <div className="w-fit h-fit flex items-center">
             <input
               type="number"
@@ -412,7 +417,11 @@ const questionnaire = () => {
           </div>
         </Field>
 
-        <Field index={18} question={<>Whats Your Height?</>} htmlFor={"height"}>
+        <Field
+          index={18}
+          question={<>What is Your Height?</>}
+          htmlFor={"height"}
+        >
           {weightUnit === "kg" ? (
             <div className="w-fit h-fit flex items-center">
               <span className="mr-5 font-fredoka">meters</span>
@@ -501,10 +510,7 @@ const questionnaire = () => {
         <Field
           index={22}
           question={
-            <>
-              Have you ever had any Coronary heart disease or myocardial
-              infraction?
-            </>
+            <>Have you ever had any Coronary heart disease or Heart Attack?</>
           }
           htmlFor={"hadHeartDiseaseOrAttack"}
         >
