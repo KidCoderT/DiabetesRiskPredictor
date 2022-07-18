@@ -28,5 +28,14 @@ The final project here consists of 3 parts
 
 Thank you and I hope you liked the project
 
+More over to run the entire app local
+
+1. Create a new python virtual environment `py -m venv venv` <br> (You can use conda or something else but this is what I did)
+2. Activate the env and go to the root directory and run <br> ` pip install -r requirements.txt`
+3. In the same terminal go to the api directory and run `uvicorn main:app --reload`
+4. Create a new terminal instance, go to frontend, do `npm i` after which the next.js app will be created 4. in the same terminal you ran the npm install command run `npm run dev` to actually start the server
+5. If the app is running annd you now want to test the main.ipynb file go for it with
+   the new env that you created.
+
 **CATALOG**
 It can all be seen in the log.txt file
