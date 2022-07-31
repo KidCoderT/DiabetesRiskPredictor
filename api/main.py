@@ -1,8 +1,12 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
+from imblearn.over_sampling import SMOTE
+import pandas as pd
 import uvicorn
-import joblib
+
+from lightgbm import LGBMClassifier
+from sklearn.ensemble import RandomForestClassifier
 
 import schemas
 from methods import (
@@ -30,8 +34,6 @@ app = FastAPI(
     openapi_tags=tags_metadata,
 )
 
-origins = ["http://localhost:3000/", "https://kct-diabetes-predictor.herokuapp.com/"]
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -41,8 +43,53 @@ app.add_middleware(
 )
 
 # Loading the Modules
-MODEL_1 = joblib.load("./models/model_1.sav")
-MODEL_2 = joblib.load("./models/model_2.sav")
+MODEL_1 = LGBMClassifier(is_unbalance=False, random_state=42)
+MODEL_2 = RandomForestClassifier(random_state=42)
+
+
+def setup_data(data, should_balance=False):
+    def replace_data_name(df):
+        df = df.rename(
+            columns={"Diabetes_binary": "IsDiabetic", "Diabetes_012": "IsDiabetic"}
+        )
+        return df
+
+    def remove_unwanted_fields(dataframe):
+        return dataframe.drop(["AnyHealthcare", "NoDocbcCost", "CholCheck"], axis=1)
+
+    def balance_data(data):
+        df = data.drop_duplicates()
+
+        x, y = df.drop(["IsDiabetic"], axis=1), df.IsDiabetic
+        smote = SMOTE()
+        x_smote, y_smote = smote.fit_resample(x, y)  # type: ignore
+        df = x_smote.merge(
+            y_smote.rename("IsDiabetic"), left_index=True, right_index=True  # type: ignore
+        )
+
+        return df
+
+    data = replace_data_name(data)
+    data = remove_unwanted_fields(data)
+
+    if should_balance:
+        data = balance_data(data)
+
+    return data
+
+
+@app.on_event("startup")
+async def setup_models():
+    """Setup/Train the twoo models on the data
+    before the app starts this way i dont need to worry
+    about model size
+    """
+
+    m1_data = setup_data(pd.read_csv("./data/model_1_data.csv"))
+    m2_data = setup_data(pd.read_csv("./data/model_2_data.csv"), True)
+
+    MODEL_1.fit(m1_data.drop(["IsDiabetic"], axis=1), m1_data.IsDiabetic)
+    MODEL_2.fit(m2_data.drop(["IsDiabetic"], axis=1), m2_data.IsDiabetic)
 
 
 @app.get("/")
