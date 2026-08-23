@@ -1,0 +1,12 @@
+[project]
+name = "api"
+version = "0.1.0"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "joblib",
+    "lightgbm",
+    "scikit-learn==1.2.2",
+    "numpy<2",
+]
