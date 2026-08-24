@@ -19,7 +19,7 @@ const education = [
   { value: 6, text: "College 4 years or more (College graduate)" },
 ];
 
-const questionnaire = () => {
+const Questionnaire = () => {
   const [age, setAge] = useState(0);
   const [gender, setGender] = useState("male");
   const [educationLevel, setEducationLevel] = useState(undefined);
@@ -66,7 +66,7 @@ const questionnaire = () => {
 
     if (age < 13) {
       errors_.push(
-        "your too young to have diabetes. enter a age from 13 and above"
+        "your too young to have diabetes. enter a age from 13 and above",
       );
     }
 
@@ -76,7 +76,7 @@ const questionnaire = () => {
 
     if (waistCircumference <= 58) {
       errors_.push(
-        "Your waist level is a bit too small and kinda indicates you as a kid."
+        "Your waist level is a bit too small and kinda indicates you as a kid.",
       );
     }
 
@@ -117,7 +117,7 @@ const questionnaire = () => {
         Weight: parseFloat(weight),
         HeightFeet: parseInt(heightFeet),
         HeightInch: parseInt(heightInch),
-        HeightMeters: parseFloat(heightMeters),
+        HeightMeters: parseInt(heightMeters * 100),
         WeightType: weightUnit,
         Smoker: isSmoker,
         NoOfDrinksPerWeek: noOfDrinksPerWeek,
@@ -451,7 +451,7 @@ const questionnaire = () => {
                   setHeightFeet(parseInt(event.target.value))
                 }
               />
-              <span className="pl-2 font-fredoka">'</span>
+              <span className="pl-2 font-fredoka">&apos;</span>
               <input
                 type="number"
                 className="outline-none border-y-2 border-l-2 border-r-2 border-gray-200 focus:outline-none font-fredoka text-center w-10 rounded font-semibold text-md  md:text-basecursor-default flex items-center text-black "
@@ -462,7 +462,7 @@ const questionnaire = () => {
                   setHeightInch(parseInt(event.target.value))
                 }
               />
-              <span className="pl-2 font-fredoka">"</span>
+              <span className="pl-2 font-fredoka">&quot;</span>
             </div>
           )}
         </Field>
@@ -595,4 +595,4 @@ const questionnaire = () => {
   );
 };
 
-export default questionnaire;
+export default Questionnaire;

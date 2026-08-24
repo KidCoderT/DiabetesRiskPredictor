@@ -9,7 +9,7 @@ const model_comments = [
   "YOU MAY HAVE TYPE 2 DIABETES.",
 ];
 
-const result = () => {
+const Result = () => {
   const router = useRouter();
   const [fetchingData, setFetchingData] = useState(true);
   const [response, setResponse] = useState({
@@ -35,6 +35,7 @@ const result = () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log("MY OUTPUT");
         console.log(data);
         setResponse({ ...data });
       })
@@ -69,20 +70,30 @@ const result = () => {
         style="flex-col md:flex-row justify-evenly items-center"
         loadingText="Fetching Predictions!"
       >
+        <div className="w-56 text-center uppercase h-fit font-fredoka px-1 flex items-center justify-center flex-col">
+          <h2 className="text-2xl my-3">The MODEL PRREDICT</h2>
+          <div className="rounded border-8 border-black text-[128px] flex justify-center items-center w-44 h-44">
+            {response["Outcome"]}
+          </div>
+          <h2 className="text-lg">{model_comments[response["Outcome"]]}</h2>
+        </div>
+
+        <div className="h-full w-2 bg-black rounded-full" />
+
         <div className="w-full md:w-56 text-center uppercase h-fit font-fredoka px-1 flex items-center justify-center flex-col">
+          <h2 className="text-2xl my-3">pre diabetes test</h2>
           <div className="rounded border-8 border-black flex justify-center items-center w-44 h-44 flex-col">
-            <h2 className="text-[64px] text-center m-0">
-              {response["Pre-diabetes Risk Score"].total_score}
+            <h2 className="text-[48px] text-center m-0">
+              {response["Pre-diabetes Risk Score"].total_score}/11
             </h2>
 
             <h2 className="text-[21px] text-center m-0">
               {parseInt(
-                (response["Pre-diabetes Risk Score"].total_score / 11) * 100
+                (response["Pre-diabetes Risk Score"].total_score / 11) * 100,
               )}
               %
             </h2>
           </div>
-          <h2 className="text-2xl my-3">pre diabetes test</h2>
           <h2 className="text-lg">
             YOUR TEST RESULT SHOWS {response["Pre-diabetes Risk Score"].risk}!!
           </h2>
@@ -91,31 +102,19 @@ const result = () => {
         <div className="h-full w-2 bg-black rounded-full" />
 
         <div className="w-56 text-center uppercase h-fit font-fredoka px-1 flex items-center justify-center flex-col">
-          <div className="rounded border-8 border-black text-[128px] flex justify-center items-center w-44 h-44">
-            {response["Outcome"]}
-          </div>
-          <h2 className="text-2xl my-3">model</h2>
-          <h2 className="text-lg">
-            THE MODEL PREDICTS {model_comments[response["Outcome"]]}
-          </h2>
-        </div>
-
-        <div className="h-full w-2 bg-black rounded-full" />
-
-        <div className="w-56 text-center uppercase h-fit font-fredoka px-1 flex items-center justify-center flex-col">
+          <h2 className="text-2xl my-3">type 2 diabetes test</h2>
           <div className="rounded border-8 border-black flex justify-center items-center w-44 h-44 flex-col">
-            <h2 className="text-[64px] text-center m-0">
-              {response["Type_2 diabetes Risk Score"].total_score}
+            <h2 className="text-[48px] text-center m-0">
+              {response["Type_2 diabetes Risk Score"].total_score}/26
             </h2>
 
             <h2 className="text-[21px] text-center m-0">
               {parseInt(
-                (response["Type_2 diabetes Risk Score"].total_score / 26) * 100
+                (response["Type_2 diabetes Risk Score"].total_score / 26) * 100,
               )}
               %
             </h2>
           </div>
-          <h2 className="text-2xl my-3">type 2 diabetes test</h2>
           <h2 className="text-lg">
             YOUR TEST RESULT SHOWS {response["Type_2 diabetes Risk Score"].risk}
             !!
@@ -126,4 +125,4 @@ const result = () => {
   );
 };
 
-export default result;
+export default Result;

@@ -1,11 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-};
-
 module.exports = {
+  reactStrictMode: true,
   env: {
-    NEXT_PUBLIC_API_URL: "http://localhost:8000",
+    // ponytail: set NEXT_PUBLIC_API_URL in Vercel; localhost is the dev fallback
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000",
   },
-  ...nextConfig,
 };
