@@ -10,3 +10,9 @@ dependencies = [
     "scikit-learn==1.2.2",
     "numpy<2",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "httpx",
+]
