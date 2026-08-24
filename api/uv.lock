@@ -58,7 +58,7 @@ requires-dist = [
     { name = "joblib" },
     { name = "lightgbm" },
     { name = "numpy", specifier = "<2" },
-    { name = "scikit-learn", specifier = "==1.2.2" },
+    { name = "scikit-learn", specifier = "==1.1.3" },
     { name = "uvicorn", extras = ["standard"] },
 ]
 
@@ -360,7 +360,7 @@ wheels = [
 
 [[package]]
 name = "scikit-learn"
-version = "1.2.2"
+version = "1.1.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "joblib" },
@@ -368,13 +368,13 @@ dependencies = [
     { name = "scipy" },
     { name = "threadpoolctl" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c9/fa/8e158d81e3602da1e7bafbd4987938bc003fe4b0f44d65681e7f8face95a/scikit-learn-1.2.2.tar.gz", hash = "sha256:8429aea30ec24e7a8c7ed8a3fa6213adf3814a6efbea09e16e0a0c71e1a1a3d7", size = 7269934, upload-time = "2023-03-09T09:57:57.31Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/38/bc/319f789ce0988d9bf1379d6e40498dc119b30bec133bf76cd82ca549b69a/scikit-learn-1.1.3.tar.gz", hash = "sha256:bef51978a51ec19977700fe7b86aecea49c825884f3811756b74a3b152bb4e35", size = 6982430, upload-time = "2022-10-26T14:34:12.66Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/27/4a/1afe473760b07663710a75437b795ef37362aebb8bf513ff3bbf78fbd0c6/scikit_learn-1.2.2-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:dfeaf8be72117eb61a164ea6fc8afb6dfe08c6f90365bde2dc16456e4bc8e45f", size = 9024742, upload-time = "2023-03-09T09:57:22.275Z" },
-    { url = "https://files.pythonhosted.org/packages/2f/fd/9fcbe7fe94150e72d87120cbc462bde1971c3674e726b81f4a4c4fdfa8e1/scikit_learn-1.2.2-cp311-cp311-macosx_12_0_arm64.whl", hash = "sha256:fe0aa1a7029ed3e1dcbf4a5bc675aa3b1bc468d9012ecf6c6f081251ca47f590", size = 8375105, upload-time = "2023-03-09T09:57:25.23Z" },
-    { url = "https://files.pythonhosted.org/packages/d7/8a/301594a8bb1cfeeb95dd86aa7dfedd31e93211940105429abddf0933cfff/scikit_learn-1.2.2-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:065e9673e24e0dc5113e2dd2b4ca30c9d8aa2fa90f4c0597241c93b63130d233", size = 9150797, upload-time = "2023-03-09T09:57:27.291Z" },
-    { url = "https://files.pythonhosted.org/packages/4c/64/a1e6e92b850b39200c82e3bc54d556b2c634b3904c39ac5cdb10b1c5765f/scikit_learn-1.2.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:bf036ea7ef66115e0d49655f16febfa547886deba20149555a41d28f56fd6d3c", size = 9562879, upload-time = "2023-03-09T09:57:30.038Z" },
-    { url = "https://files.pythonhosted.org/packages/db/98/169b46a84b48f92df2b5e163fce75d471f4df933f8b3d925a61133210776/scikit_learn-1.2.2-cp311-cp311-win_amd64.whl", hash = "sha256:8b0670d4224a3c2d596fd572fb4fa673b2a0ccfb07152688ebd2ea0b8c61025c", size = 8261146, upload-time = "2023-03-09T09:57:32.138Z" },
+    { url = "https://files.pythonhosted.org/packages/77/0d/7555c9b3cd8dd1796173f57dd9e63f5a6acbdcf73ac2c6199017910b3991/scikit_learn-1.1.3-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:5699cded6c0685426433c7e5afe0fecad80ec831ec7fa264940e50c796775cc5", size = 8621073, upload-time = "2022-10-26T14:33:27.015Z" },
+    { url = "https://files.pythonhosted.org/packages/91/54/14e64c540d554d29e40239850bc656e2d403870c6fb388319034eb878f0a/scikit_learn-1.1.3-cp311-cp311-macosx_12_0_arm64.whl", hash = "sha256:2ee2c649f2231b68511aabb0dc827edd8936aad682acc6263c34aed11bc95dac", size = 7586418, upload-time = "2022-10-26T14:33:29.768Z" },
+    { url = "https://files.pythonhosted.org/packages/65/d2/c9beff50f6adf2a8763e30d1ea1347b979caa4c5a8fe9d5a9d56f9a9173d/scikit_learn-1.1.3-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:6d1c1394e38a3319ace620381f6f23cc807d8780e9915c152449a86fc8f1db21", size = 31553483, upload-time = "2022-10-26T14:33:33.308Z" },
+    { url = "https://files.pythonhosted.org/packages/53/d8/4eb42e5a2f7bb0e9d376de7013235694f811af70b6bab66a92f30e4bc8be/scikit_learn-1.1.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:250da993701da88bf475e7c5746abf1285ea0ae47e4d0917cd13afd6600bb162", size = 31992405, upload-time = "2022-10-26T14:33:37.654Z" },
+    { url = "https://files.pythonhosted.org/packages/18/0e/930026d0554075f212c974773aab729ad370d0f611eddaa0d8bbaa8eaa33/scikit_learn-1.1.3-cp311-cp311-win_amd64.whl", hash = "sha256:fd3ee69d36d42a7dcbb17e355a5653af5fd241a7dfd9133080b3dde8d9e2aafb", size = 7493908, upload-time = "2022-10-26T14:33:40.789Z" },
 ]
 
 [[package]]
